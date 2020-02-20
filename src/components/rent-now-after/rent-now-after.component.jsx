@@ -152,6 +152,7 @@ const RentNowAfter = ({
       'p-card-exp-date-year': form.creditCardExpYear,
       'p-cvv-number': form.creditCardCvvNumber,
       'p-credit-card-name': form.nameOnCard,
+      'p-ab': encrypt ? ab : null,
     }
     // console.log(params)
     // console.log(humps.decamelizeKeys(params))
