@@ -125,7 +125,7 @@ const RentNowAfter = ({
       // clientUid: `${HUB_URL}/clients/${clientUrn}`,
       'p-first-name': form.firstName,
       'p-last-name': form.lastName,
-      'p-email': form.email,
+      'u-email': form.email,
       'p-tel': form.phone,
       'p-waiting-id': encrypt ? encryptedWaitingId : waitingId,
       'p-unit-id': form.unitId,
