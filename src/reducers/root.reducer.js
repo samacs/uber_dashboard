@@ -9,10 +9,7 @@ import moveInCostsReducer from './move-in-costs/move-in-costs.reducer'
 import pusherReducer from './pusher/pusher.reducer'
 import rentNowAfterReducer from './rent-now-after/rent-now-after.reducer'
 
-let whitelist = []
-if (process.env.NODE_ENV === 'production') {
-  whitelist = ['global', 'insuranceData', 'moveInCosts', 'rentNowAfter']
-}
+const whitelist = ['global', 'insuranceData', 'moveInCosts', 'rentNowAfter']
 
 const persistConfig = {
   key: 'root',

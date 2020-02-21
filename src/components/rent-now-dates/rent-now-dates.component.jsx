@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 const RentNowDates = ({ startDate, endDate, neededByDate, onChange }) => {
   const handleOnDateChanged = (name, date) => {
-    onChange(name, moment(date).format())
+    onChange(name, moment(date).format('YYYY-MM-DD'))
   }
 
   const isBeforeDate = (date, beforeDate) => moment(date).isBefore(beforeDate)

@@ -4,10 +4,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { TabPane, Col, FormGroup, Label, Input, Form, Button } from 'reactstrap'
-import moment from 'moment'
-import humps from 'humps'
+import { objectToFormData } from 'object-to-formdata'
 
-import { HUB_URL } from '../../config/backend.config'
+// import { HUB_URL } from '../../config/backend.config'
 import {
   selectWaitingId,
   selectEncryptedWaitingId,
@@ -131,10 +130,11 @@ const RentNowAfter = ({
       'p-unit-id': form.unitId,
       'p-unit-name': form.unitName,
       'p-tenant-id': form.tenantId,
-      'p-total': form.total,
+      'p-total': form.total.replace(/\$/gi, ''),
       'p-start-date': form.startDate,
       'p-end-date': form.endDate,
       'p-address1': form.billingAddressLine1,
+      'p-address2': form.billingAddressLine2,
       'p-postal-code': form.billingZip,
       'p-city': form.billingCity,
       'p-state-code': form.billingStateCode,
@@ -147,16 +147,16 @@ const RentNowAfter = ({
       'p-concession-id': form.concessionId,
       'p-insurance-coverage-id': form.insuranceCoverageId,
       'p-card-type': form.creditCardType,
-      'p-card-number': form.creditCardNumber,
+      'p-card-number': form.creditCardNumber.replace(/\s+/gi, ''),
       'p-card-exp-date-month': form.creditCardExpMonth,
       'p-card-exp-date-year': form.creditCardExpYear,
       'p-cvv-number': form.creditCardCvvNumber,
       'p-credit-card-name': form.nameOnCard,
       'p-ab': encrypt ? ab : null,
+      ga_client_id: '131441893.1581704404',
     }
-    // console.log(params)
-    // console.log(humps.decamelizeKeys(params))
-    rentNowAfterRequest(params)
+    const data = objectToFormData(params)
+    rentNowAfterRequest(data)
   }
 
   return (
