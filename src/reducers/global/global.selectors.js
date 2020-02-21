@@ -44,3 +44,8 @@ export const selectAccessToken = createSelector(
   [selectForm],
   form => form.accessToken,
 )
+
+export const selectBilling_28Days = createSelector(
+  [selectForm],
+  form => form.billing_28Days,
+)

@@ -5,7 +5,6 @@ import {
   CLIENT_URN,
 } from '../../config/backend.config'
 
-// TODO: Change location URN and encryption key according to INTG-563.
 const Form = Record({
   locationUrn: LOCATION_URN,
   clientUrn: CLIENT_URN,
@@ -15,6 +14,7 @@ const Form = Record({
   encrypt: false,
   ab: '',
   accessToken: '',
+  billing_28Days: false,
 })
 
 const InitialState = Record({

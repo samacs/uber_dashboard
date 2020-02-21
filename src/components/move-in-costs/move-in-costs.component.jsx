@@ -11,6 +11,7 @@ import {
   selectEncrypt,
   selectAb,
   selectLocationUrn,
+  selectBilling_28Days,
 } from '../../reducers/global/global.selectors'
 import {
   selectForm,
@@ -35,6 +36,7 @@ const mapStateToProps = createStructuredSelector({
   isRequesting: selectIsRequesting,
   form: selectForm,
   insurancePlans: selectInsurancePlans,
+  billing_28Days: selectBilling_28Days,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -56,6 +58,7 @@ const MoveInCosts = ({
   isRequesting,
   error,
   insurancePlans,
+  billing_28Days,
   actions: {
     globalFormFieldChanged,
     moveInCostsFormFieldChanged,
@@ -81,6 +84,11 @@ const MoveInCosts = ({
     moveInCostsFormFieldChanged(name, value)
   }
 
+  const handleOnBilling_28DaysChanged = e => {
+    const { name, checked } = e.target
+    globalFormFieldChanged(name, checked)
+  }
+
   const handleOnSubmit = e => {
     e.preventDefault()
 
@@ -88,6 +96,7 @@ const MoveInCosts = ({
       locationUrn,
       waitingId: encrypt ? encryptedWaitingId : waitingId,
       ab: encrypt ? ab : null,
+      billing_28Days,
       ...form.toJS(),
     }
     moveInCostsRequest(params)
@@ -143,6 +152,19 @@ const MoveInCosts = ({
             />
           </Col>
         </FormGroup>
+        <FormGroup row check>
+          <Col>
+            <Label check htmlFor="billing-28-days">
+              <Input
+                name="billing_28Days"
+                type="checkbox"
+                id="billing-28-days"
+                onChange={handleOnBilling_28DaysChanged}
+              />{' '}
+              28 days billing?
+            </Label>
+          </Col>
+        </FormGroup>
         <FormGroup row>
           <Col>
             <Label htmlFor="insurance-label">Insurance label</Label>
@@ -186,6 +208,7 @@ MoveInCosts.propTypes = {
   isRequesting: PropTypes.bool.isRequired,
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   insurancePlans: PropTypes.array.isRequired,
+  billing_28Days: PropTypes.bool.isRequired,
   actions: PropTypes.shape({
     globalFormFieldChanged: PropTypes.func.isRequired,
     moveInCostsFormFieldChanged: PropTypes.func.isRequired,
