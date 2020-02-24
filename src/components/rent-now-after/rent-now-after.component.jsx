@@ -96,7 +96,7 @@ const RentNowAfter = ({
   } = form
 
   const handleOnWaitingIdChange = e => {
-    const { name, value } = e
+    const { name, value } = e.target
     globalFormFieldChanged(name, value)
   }
 
