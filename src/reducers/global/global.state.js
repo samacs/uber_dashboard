@@ -9,7 +9,7 @@ const Form = Record({
   locationUrn: LOCATION_URN,
   clientUrn: CLIENT_URN,
   encryptClientKey: ENCRYPT_CLIENT_KEY,
-  waitingId: 69824,
+  waitingId: '',
   encryptedWaitingId: null,
   encrypt: false,
   ab: '',
