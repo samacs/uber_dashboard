@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js'
-import { encode } from 'url-safe-base64'
+import { encode, trim } from 'url-safe-base64'
 
 export default class EncryptionService {
   encryptWaitingId = (encryptClientKey, waitingId) => {
@@ -11,10 +11,15 @@ export default class EncryptionService {
       mode,
       padding: CryptoJS.pad.NoPadding,
     })
-    const ab = encode(iv.toString(CryptoJS.enc.Base64)).replace(/\./g, '=')
-    const encryptedWaitingId = encode(
-      encrypted.ciphertext.toString(CryptoJS.enc.Base64),
-    ).replace(/\./g, '=')
+    const ab = trim(
+      encode(iv.toString(CryptoJS.enc.Base64)).replace(/\./g, '='),
+    )
+    const encryptedWaitingId = trim(
+      encode(encrypted.ciphertext.toString(CryptoJS.enc.Base64)).replace(
+        /\./g,
+        '=',
+      ),
+    )
     return { encryptedWaitingId, ab }
   }
 }
