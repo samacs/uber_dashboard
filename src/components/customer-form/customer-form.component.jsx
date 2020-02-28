@@ -1,12 +1,38 @@
 import React, { Fragment } from 'react'
-import { FormGroup, Col, Label, Input } from 'reactstrap'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+import { FormGroup, Col, Label, Input, Button } from 'reactstrap'
 
-const CustomerForm = ({ customer, onChange }) => {
+import { selectCustomer } from '../../reducers/insurance-data/insurance-data.selectors'
+
+const mapStateToProps = createStructuredSelector({
+  reservationCustomer: selectCustomer,
+})
+
+const CustomerForm = ({ reservationCustomer, customer, onChange }) => {
   const { firstName, lastName, email, phone } = customer
 
   const handleOnChange = e => {
     const { name, value } = e.target
     onChange(name, value)
+  }
+
+  const customerFieldSetter = field => {
+    let customerSetter = null
+    if (reservationCustomer) {
+      customerSetter = (
+        <div className="text-right">
+          <Button
+            className="btn-selector text-right"
+            color="link"
+            size="sm"
+            onClick={() => onChange(field, reservationCustomer[field])}>
+            {reservationCustomer[field]}
+          </Button>
+        </div>
+      )
+    }
+    return customerSetter
   }
 
   return (
@@ -22,6 +48,7 @@ const CustomerForm = ({ customer, onChange }) => {
             value={firstName}
             onChange={handleOnChange}
           />
+          {customerFieldSetter('firstName')}
         </Col>
         <Col md="6">
           <Label htmlFor="last-name">Last name</Label>
@@ -32,6 +59,7 @@ const CustomerForm = ({ customer, onChange }) => {
             value={lastName}
             onChange={handleOnChange}
           />
+          {customerFieldSetter('lastName')}
         </Col>
       </FormGroup>
       <FormGroup row>
@@ -44,6 +72,7 @@ const CustomerForm = ({ customer, onChange }) => {
             value={email}
             onChange={handleOnChange}
           />
+          {customerFieldSetter('email')}
         </Col>
         <Col md="4">
           <Label htmlFor="phone">Phone</Label>
@@ -54,10 +83,11 @@ const CustomerForm = ({ customer, onChange }) => {
             value={phone}
             onChange={handleOnChange}
           />
+          {customerFieldSetter('phone')}
         </Col>
       </FormGroup>
     </Fragment>
   )
 }
 
-export default CustomerForm
+export default connect(mapStateToProps)(CustomerForm)

@@ -14,7 +14,7 @@ const whitelist = ['global', 'insuranceData', 'moveInCosts', 'rentNowAfter']
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: whitelist,
+  whitelist,
 }
 
 const createRootReducer = history =>

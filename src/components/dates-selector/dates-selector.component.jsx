@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
 const DatesSelector = ({
   dateNeeded,
   dateMoveIn,
+  requireTodayMoveIn,
   actions: { moveInCostsFormFieldChanged },
 }) => {
   const handleOnDateChanged = (name, date) => {
@@ -30,6 +31,23 @@ const DatesSelector = ({
   }
 
   const isBeforeDate = (date, beforeDate) => moment(date).isBefore(beforeDate)
+
+  const minDate = requireTodayMoveIn
+    ? dateMoveIn
+    : isBeforeDate(dateMoveIn, dateNeeded)
+    ? dateNeeded
+    : dateMoveIn
+
+  const selectedDate = requireTodayMoveIn
+    ? dateMoveIn
+    : isBeforeDate(dateMoveIn, dateNeeded)
+    ? dateNeeded
+    : dateMoveIn
+
+  console.log('dateMoveIn', dateMoveIn)
+  console.log('dateNeeded', dateNeeded)
+  console.log('minDate', minDate)
+  console.log('selectedDate', selectedDate)
 
   return (
     <Fragment>
@@ -50,13 +68,10 @@ const DatesSelector = ({
         <FormGroup>
           <DatePicker
             className="form-control"
-            selected={moment(
-              isBeforeDate(dateMoveIn, dateNeeded) ? dateNeeded : dateMoveIn,
-            ).toDate()}
+            selected={moment(selectedDate).toDate()}
             onChange={date => handleOnDateChanged('dateMoveIn', date)}
-            minDate={moment(
-              isBeforeDate(dateMoveIn, dateNeeded) ? dateNeeded : new Date(),
-            ).toDate()}
+            minDate={moment(minDate).toDate()}
+            maxDate={moment(dateMoveIn)}
           />
           <MoveInDateSetter dateFieldName="dateMoveIn" />
         </FormGroup>

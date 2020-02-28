@@ -43,7 +43,14 @@ export default class Api {
 
   _request = config => {
     console.info(`${config.method} ${config.url}`)
-    return this.client.request(config)
+    const requestConfig = _.extend(this.client.defaults, config)
+    const { headers } = requestConfig
+    if (headers['Content-Type'] === 'multipart/form-data') {
+      const { baseURL, url, data } = requestConfig
+      const absoluteURL = `${baseURL}${url}`
+      return axios.post(absoluteURL, data)
+    }
+    return this.client.request(requestConfig)
   }
 
   _transformRequest = (data, _headers) => {

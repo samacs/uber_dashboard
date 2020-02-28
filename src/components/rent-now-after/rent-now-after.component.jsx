@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { TabPane, Col, FormGroup, Label, Input, Form, Button } from 'reactstrap'
-import { objectToFormData } from 'object-to-formdata'
 
 // import { HUB_URL } from '../../config/backend.config'
 import {
@@ -155,14 +154,33 @@ const RentNowAfter = ({
       'p-ab': encrypt ? ab : null,
       ga_client_id: '131441893.1581704404',
     }
-    const data = objectToFormData(params)
-    rentNowAfterRequest(data)
+    const objectFromFormData = formData => {
+      const values = {}
+      for (let [key, value] of formData.entries()) {
+        if (values[key]) {
+          if (!(values[key] instanceof Array)) {
+            values[key] = new Array(values[key])
+          }
+          values[key].push(value)
+        } else {
+          values[key] = value
+        }
+      }
+      return values
+    }
+    const formData = new FormData()
+    for (let field in params) {
+      formData.set(field, params[field])
+    }
+    console.log(formData)
+    console.log(objectFromFormData(formData))
+    rentNowAfterRequest(formData)
   }
 
   return (
     <TabPane tabId={tabId}>
       <h1 className="h2">RentNowAfterReservation</h1>
-      <Form onSubmit={handleOnSubmit}>
+      <Form onSubmit={handleOnSubmit} name="rentNowAfterReservation">
         <FormGroup row>
           <Col md="4">
             <Label htmlFor="rent-now-after-waiting-id">Waiting ID</Label>

@@ -18,6 +18,7 @@ import {
   selectIsRequesting,
   selectError,
 } from '../../reducers/move-in-costs/move-in-costs.selectors'
+import { selectRequireTodayMoveIn } from '../../reducers/insurance-data/insurance-data.selectors'
 import { selectInsurancePlans } from '../../reducers/insurance-data/insurance-data.selectors'
 import * as globalActions from '../../reducers/global/global.actions'
 import * as moveInCostsActions from '../../reducers/move-in-costs/move-in-costs.actions'
@@ -37,6 +38,7 @@ const mapStateToProps = createStructuredSelector({
   form: selectForm,
   insurancePlans: selectInsurancePlans,
   billing_28Days: selectBilling_28Days,
+  requireTodayMoveIn: selectRequireTodayMoveIn,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -59,6 +61,7 @@ const MoveInCosts = ({
   error,
   insurancePlans,
   billing_28Days,
+  requireTodayMoveIn,
   actions: {
     globalFormFieldChanged,
     moveInCostsFormFieldChanged,
@@ -141,7 +144,11 @@ const MoveInCosts = ({
           </Col>
         </FormGroup>
         <FormGroup row>
-          <DatesSelector dateNeeded={dateNeeded} dateMoveIn={dateMoveIn} />
+          <DatesSelector
+            dateNeeded={dateNeeded}
+            dateMoveIn={dateMoveIn}
+            requireTodayMoveIn={requireTodayMoveIn}
+          />
           <Col md="6">
             <InsuranceCoverageSelector
               value={insuranceCoverageId}
@@ -209,6 +216,7 @@ MoveInCosts.propTypes = {
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   insurancePlans: PropTypes.array.isRequired,
   billing_28Days: PropTypes.bool.isRequired,
+  requireTodayMoveIn: PropTypes.bool.isRequired,
   actions: PropTypes.shape({
     globalFormFieldChanged: PropTypes.func.isRequired,
     moveInCostsFormFieldChanged: PropTypes.func.isRequired,

@@ -41,3 +41,8 @@ export const selectCustomer = createSelector(
   [selectInsuranceData],
   state => state.customer,
 )
+
+export const selectRequireTodayMoveIn = createSelector(
+  [selectForm],
+  form => form.requireTodayMoveIn,
+)

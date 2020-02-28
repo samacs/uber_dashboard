@@ -30,9 +30,7 @@ const RentNowDates = ({ startDate, endDate, neededByDate, onChange }) => {
         <FormGroup>
           <DatePicker
             className="form-control"
-            selected={moment(
-              isBeforeDate(startDate, endDate) ? startDate : endDate,
-            ).toDate()}
+            selected={moment(endDate).toDate()}
             onChange={date => handleOnDateChanged('endDate', date)}
             minDate={moment(
               isBeforeDate(startDate, endDate) ? startDate : new Date(),
