@@ -4,9 +4,14 @@ import {
   PUSHER_SUBSCRIBED,
 } from './pusher.constants'
 
-export const pusherSubscribe = (pusherKey, pusherChannel, pusherEvent) => ({
+export const pusherSubscribe = (
+  pusherKey,
+  pusherChannel,
+  pusherEvent,
+  prefix,
+) => ({
   type: PUSHER_SUBSCRIBE,
-  payload: { pusherKey, pusherChannel, pusherEvent },
+  payload: { pusherKey, pusherChannel, pusherEvent, prefix },
 })
 
 export const pusherSubscribed = () => ({

@@ -3,6 +3,7 @@ import {
   RENT_NOW_AFTER_FAILURE,
   RENT_NOW_AFTER_SUCCESS,
   RENT_NOW_AFTER_FORM_FIELD_CHANGED,
+  RENT_NOW_AFTER_RESERVATION_SUCCESS,
 } from './rent-now-after.constants'
 import InitialState from './rent-now-after.state'
 
@@ -31,6 +32,13 @@ export default (state = initialState, action) => {
         .set('response', null)
     case RENT_NOW_AFTER_SUCCESS:
       console.log(action)
+      return state
+        .set('isRequesting', false)
+        .set('error', null)
+        .set('response', action.payload)
+    case RENT_NOW_AFTER_RESERVATION_SUCCESS:
+      console.info(action.type)
+      console.info(action.payload)
       return state
         .set('isRequesting', false)
         .set('error', null)

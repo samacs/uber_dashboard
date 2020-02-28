@@ -9,6 +9,7 @@ export default class EncryptionService {
     const encrypted = CryptoJS.AES.encrypt(waitingId.toString(), key, {
       iv,
       mode,
+      padding: CryptoJS.pad.NoPadding,
     })
     const ab = encode(iv.toString(CryptoJS.enc.Base64)).replace(/\./g, '=')
     const encryptedWaitingId = encode(

@@ -28,18 +28,20 @@ const handleChannelSubscribe = (
   pusherKey,
   pusherChannel,
   pusherEvent,
+  prefix,
   store,
 ) => {
   try {
     const pusher = new Pusher(pusherKey)
     const channel = pusher.subscribe(pusherChannel)
+    const actionType = prefix ? `${prefix}${pusherEvent}` : pusherEvent
     channel.bind(
       pusherEvent,
-      handleMessageReceived(pusher, channel, pusherEvent, store),
+      handleMessageReceived(pusher, channel, actionType, store),
     )
     channel.bind('error', data => {
       const action = {
-        type: `${pusherEvent.toUpperCase()}_ERROR`,
+        type: `${actionType.toUpperCase()}`,
         payload: humps.camelizeKeys(data),
       }
       store.dispatch(pusherMessageReceived('error', data))
@@ -60,8 +62,14 @@ export default store => next => action => {
 
   switch (action.type) {
     case PUSHER_SUBSCRIBE:
-      const { pusherKey, pusherChannel, pusherEvent } = action.payload
-      handleChannelSubscribe(pusherKey, pusherChannel, pusherEvent, store)
+      const { pusherKey, pusherChannel, pusherEvent, prefix } = action.payload
+      handleChannelSubscribe(
+        pusherKey,
+        pusherChannel,
+        pusherEvent,
+        prefix,
+        store,
+      )
       break
     default:
       return next(action)
