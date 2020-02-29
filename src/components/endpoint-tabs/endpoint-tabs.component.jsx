@@ -6,6 +6,7 @@ import { Container, Row, Col, TabContent } from 'reactstrap'
 import InsuranceData from '../insurance-data/insurance-data.component'
 import MoveInCosts from '../move-in-costs/move-in-costs.component'
 import RentNowAfter from '../rent-now-after/rent-now-after.component'
+import ShortRentNow from '../short-rent-now/short-rent-now.component'
 
 const EndpointTabs = ({ activeTab }) => (
   <div
@@ -25,6 +26,7 @@ const EndpointTabs = ({ activeTab }) => (
             <InsuranceData />
             <MoveInCosts />
             <RentNowAfter />
+            <ShortRentNow />
           </TabContent>
         </Col>
       </Row>

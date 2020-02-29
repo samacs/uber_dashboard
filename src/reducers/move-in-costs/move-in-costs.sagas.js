@@ -10,9 +10,9 @@ const service = new MoveInCostsService()
 export function* retrieveMoveInCosts({ payload }) {
   try {
     const { data: response } = yield service.retrieveMoveInCosts(payload)
-    const { pusher_key, pusher_channel, pusher_event } = response
+    const { pusherKey, pusherChannel, pusherEvent } = response
     yield put(moveInCostsSuccess(response))
-    yield put(pusherSubscribe(pusher_key, pusher_channel, pusher_event))
+    yield put(pusherSubscribe(pusherKey, pusherChannel, pusherEvent))
   } catch (error) {
     yield put(moveInCostsFailure(error))
   }

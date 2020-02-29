@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Button } from 'reactstrap'
 import Moment from 'react-moment'
-
 import { FormGroup, Col, Label } from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'

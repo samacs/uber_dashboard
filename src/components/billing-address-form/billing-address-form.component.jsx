@@ -1,7 +1,34 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { FormGroup, Col, Label, Input } from 'reactstrap'
 
 import { US_STATES } from '../../reducers/global/global.constants'
+
+const billingAddresses = [
+  {
+    label: 'Doc Brown',
+    billingAddressLine1: '1640 Riverside Drive',
+    billingCity: 'Hill Valley',
+    billingStateCode: 'CA',
+  },
+  {
+    label: 'Tim Taylor',
+    billingAddressLine1: '510 Glenview',
+    billingCity: 'Detroit',
+    billingStateCode: 'MI',
+  },
+  {
+    label: 'Cliff Huxtable',
+    billingAddressLine1: '10 Stigwood Avenue',
+    billingCity: 'New York City',
+    billingStateCode: 'NY',
+  },
+  {
+    label: 'Tony Nelson',
+    billingAddressLine1: '1020 Palm Drive',
+    billingCity: 'Cocoa Beach',
+    billingStateCode: 'FL',
+  },
+]
 
 const BillingAddressForm = ({ billingAddressInfo, onChange }) => {
   const {
@@ -10,11 +37,51 @@ const BillingAddressForm = ({ billingAddressInfo, onChange }) => {
     billingCity,
     billingStateCode,
     billingZip,
+    billingAddressIndex,
   } = billingAddressInfo
+
+  useState(() => {
+    if (!billingAddressIndex) {
+      onChange('billingAddressIndex', 0)
+    }
+  }, [billingAddressIndex])
+
+  const onBillingAddressChanged = value => {
+    const billingAddress = billingAddresses[value]
+    onChange('billingAddressIndex', value)
+    onChange('billingAddressLine1', billingAddress.billingAddressLine1)
+    onChange('billingCity', billingAddress.billingCity)
+    onChange('billingStateCode', billingAddress.billingStateCode)
+    onChange('billingZip', '12345')
+  }
+
+  const handleOnChange = e => {
+    const { name, value } = e.target
+    onChange(name, value)
+  }
 
   return (
     <Fragment>
       <h3>Billing address information</h3>
+      <FormGroup row>
+        <Col>
+          <Label htmlFor="billing-address-index">
+            Select a billing address
+          </Label>
+          <Input
+            type="select"
+            name="billingAddressIndex"
+            id="billing-address-index"
+            onChange={e => onBillingAddressChanged(e.target.value)}>
+            {billingAddresses.map((billingAddress, index) => (
+              <option key={index} value={index}>
+                {billingAddress.label} ({billingAddress.billingCity},{' '}
+                {billingAddress.billingStateCode})
+              </option>
+            ))}
+          </Input>
+        </Col>
+      </FormGroup>
       <FormGroup row>
         <Col>
           <Label htmlFor="billing-address-line-1">Billing address line 1</Label>
@@ -22,7 +89,7 @@ const BillingAddressForm = ({ billingAddressInfo, onChange }) => {
             id="billing-address-line-1"
             name="billingAddressLine1"
             value={billingAddressLine1}
-            onChange={onChange}
+            onChange={handleOnChange}
           />
         </Col>
       </FormGroup>
@@ -33,7 +100,7 @@ const BillingAddressForm = ({ billingAddressInfo, onChange }) => {
             id="billing-address-line-2"
             name="billingAddressLine2"
             value={billingAddressLine2}
-            onChange={onChange}
+            onChange={handleOnChange}
           />
         </Col>
       </FormGroup>
@@ -44,7 +111,7 @@ const BillingAddressForm = ({ billingAddressInfo, onChange }) => {
             id="billing-city"
             name="billingCity"
             value={billingCity}
-            onChange={onChange}
+            onChange={handleOnChange}
           />
         </Col>
         <Col md="2">
@@ -54,7 +121,7 @@ const BillingAddressForm = ({ billingAddressInfo, onChange }) => {
             id="billing-state-code"
             name="billingStateCode"
             value={billingStateCode}
-            onChange={onChange}>
+            onChange={handleOnChange}>
             {US_STATES.map(state => (
               <option key={state.code} value={state.code}>
                 {state.name}
@@ -68,7 +135,7 @@ const BillingAddressForm = ({ billingAddressInfo, onChange }) => {
             id="billing-zip"
             name="billingZip"
             value={billingZip}
-            onChange={onChange}
+            onChange={handleOnChange}
           />
         </Col>
       </FormGroup>

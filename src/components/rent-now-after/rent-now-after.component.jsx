@@ -13,6 +13,7 @@ import {
   selectAb,
   selectLocationUrn,
   selectClientUrn,
+  selectBilling_28Days,
 } from '../../reducers/global/global.selectors'
 import { selectInsurancePlans } from '../../reducers/insurance-data/insurance-data.selectors'
 import {
@@ -49,6 +50,7 @@ const mapStateToProps = createStructuredSelector({
   billingAddressInfo: selectBillingAddressInfo,
   isRequesting: selectIsRequesting,
   customer: selectCustomer,
+  billing_28Days: selectBilling_28Days,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -74,6 +76,7 @@ const RentNowAfter = ({
   billingAddressInfo,
   isRequesting,
   customer,
+  billing_28Days,
   actions: {
     rentNowAfterFormFieldChanged,
     globalFormFieldChanged,
@@ -107,6 +110,11 @@ const RentNowAfter = ({
   const handleOnCheckboxChange = e => {
     const { name, checked } = e.target
     rentNowAfterFormFieldChanged(name, checked)
+  }
+
+  const handleOnBilling_28DaysChanged = e => {
+    const { name, checked } = e.target
+    globalFormFieldChanged(name, checked)
   }
 
   const handleOnSubmit = e => {
@@ -153,27 +161,12 @@ const RentNowAfter = ({
       'p-credit-card-name': form.nameOnCard,
       'p-ab': encrypt ? ab : null,
       ga_client_id: '131441893.1581704404',
-    }
-    const objectFromFormData = formData => {
-      const values = {}
-      for (let [key, value] of formData.entries()) {
-        if (values[key]) {
-          if (!(values[key] instanceof Array)) {
-            values[key] = new Array(values[key])
-          }
-          values[key].push(value)
-        } else {
-          values[key] = value
-        }
-      }
-      return values
+      'p-billing-28-days': billing_28Days,
     }
     const formData = new FormData()
     for (let field in params) {
       formData.set(field, params[field])
     }
-    console.log(formData)
-    console.log(objectFromFormData(formData))
     rentNowAfterRequest(formData)
   }
 
@@ -263,6 +256,20 @@ const RentNowAfter = ({
             />
           </Col>
         </FormGroup>
+        <FormGroup row check>
+          <Col>
+            <Label htmlFor="rent-now-after-billing-28-days">
+              <Input
+                type="checkbox"
+                name="billing_28Days"
+                id="rent-now-after-billing-28-days"
+                checked={billing_28Days}
+                onChange={handleOnBilling_28DaysChanged}
+              />{' '}
+              28 days billing?
+            </Label>
+          </Col>
+        </FormGroup>
         <CustomerForm
           customer={customer}
           onChange={rentNowAfterFormFieldChanged}
@@ -274,7 +281,7 @@ const RentNowAfter = ({
         />
         <BillingAddressForm
           billingAddressInfo={billingAddressInfo}
-          onChange={handleOnFieldChanged}
+          onChange={rentNowAfterFormFieldChanged}
         />
         <FormGroup row>
           <Col md="3">

@@ -13,9 +13,9 @@ const service = new InsuranceDataService()
 export function* retrieveInsuranceData({ payload }) {
   try {
     const { data: response } = yield service.retrieveInsuranceData(payload)
-    const { pusher_key, pusher_channel, pusher_event } = response
+    const { pusherKey, pusherChannel, pusherEvent } = response
     yield put(insuranceDataSuccess(response))
-    yield put(pusherSubscribe(pusher_key, pusher_channel, pusher_event))
+    yield put(pusherSubscribe(pusherKey, pusherChannel, pusherEvent))
   } catch (error) {
     yield put(insuranceDataFailure(error))
   }

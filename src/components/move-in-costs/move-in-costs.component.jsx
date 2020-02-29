@@ -166,6 +166,7 @@ const MoveInCosts = ({
                 name="billing_28Days"
                 type="checkbox"
                 id="billing-28-days"
+                checked={billing_28Days}
                 onChange={handleOnBilling_28DaysChanged}
               />{' '}
               28 days billing?

@@ -12,7 +12,7 @@ const initialState = new InitialState()
 
 export default (state = initialState, action) => {
   if (!(state instanceof InitialState)) {
-    return initialState
+    return initialState.mergeDeep(state)
   }
 
   switch (action.type) {

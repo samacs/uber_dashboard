@@ -53,6 +53,7 @@ export const selectBillingAddressInfo = createSelector([selectForm], form => {
     billingCity,
     billingZip,
     billingStateCode,
+    billingAddressIndex,
   } = form
   return {
     billingAddressLine1,
@@ -60,6 +61,7 @@ export const selectBillingAddressInfo = createSelector([selectForm], form => {
     billingCity,
     billingZip,
     billingStateCode,
+    billingAddressIndex,
   }
 })
 

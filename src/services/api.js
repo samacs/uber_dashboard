@@ -64,7 +64,7 @@ export default class Api {
 
   _transformResponse = data => {
     if (data) {
-      data = humps.camelizeKeys(data)
+      data = JSON.stringify(humps.camelizeKeys(JSON.parse(data)))
     }
     return data
   }

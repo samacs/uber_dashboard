@@ -8,7 +8,7 @@ export const pusherSubscribe = (
   pusherKey,
   pusherChannel,
   pusherEvent,
-  prefix,
+  prefix = null,
 ) => ({
   type: PUSHER_SUBSCRIBE,
   payload: { pusherKey, pusherChannel, pusherEvent, prefix },

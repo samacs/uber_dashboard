@@ -45,6 +45,7 @@ const InitialState = Record({
   response: null,
   form: new Form(),
   leadForm: 'rent_now_after_reservation_site_link',
+  billingAddressIndex: 0,
 })
 
 export default InitialState

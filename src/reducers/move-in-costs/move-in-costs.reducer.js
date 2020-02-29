@@ -12,7 +12,7 @@ const initialState = new InitialState()
 
 export default (state = initialState, action) => {
   if (!(state instanceof InitialState)) {
-    return initialState
+    return initialState.mergeDeep(state)
   }
 
   switch (action.type) {
@@ -46,6 +46,7 @@ export default (state = initialState, action) => {
         .set('total', payload.total)
         .set('startDate', payload.startDate)
         .set('endDate', payload.endDate)
+
         .set('moveInCosts', payload.moveInCosts)
     default:
       return state

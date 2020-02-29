@@ -1,12 +1,29 @@
 import React, { Fragment, useState } from 'react'
-import { FormGroup, Col, Label, Input } from 'reactstrap'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+import { FormGroup, Col, Label, Input, Button, Row } from 'reactstrap'
 import InputMask from 'react-input-mask'
 import moment from 'moment'
 import creditCardType from 'credit-card-type'
 
 import { CREDIT_CARD_TYPES } from '../../reducers/global/global.constants'
+import { selectCustomer } from '../../reducers/insurance-data/insurance-data.selectors'
 
-const CreditCardForm = ({ creditCardInfo, onChange }) => {
+const mapStateToProps = createStructuredSelector({
+  customer: selectCustomer,
+})
+
+const future = moment().add(1, 'year')
+const defaultCvv = '123'
+const defaultYear = future.format('YYYY')
+const defaultMonth = future.format('MM')
+
+const creditCardNumbers = {
+  invalid: '4111111111111111',
+  valid: '4222222222222222',
+}
+
+const CreditCardForm = ({ customer, creditCardInfo, onChange }) => {
   const {
     nameOnCard,
     creditCardNumber,
@@ -37,9 +54,9 @@ const CreditCardForm = ({ creditCardInfo, onChange }) => {
     }
   }
 
-  const creditCardIdfromType = type => CREDIT_CARD_TYPES[type]
+  const creditCardIdFromType = type => CREDIT_CARD_TYPES[type]
 
-  const hanldeOnCreditCardNumberChanged = e => {
+  const handleOnCreditCardNumberChanged = e => {
     const { name, value } = e.target
     onChange(name, value)
 
@@ -47,7 +64,7 @@ const CreditCardForm = ({ creditCardInfo, onChange }) => {
     if (match) {
       const type = creditCardType(value)
       if (type.length) {
-        const id = creditCardIdfromType(type[0].type)
+        const id = creditCardIdFromType(type[0].type)
         onChange('creditCardType', id)
       }
     }
@@ -56,6 +73,36 @@ const CreditCardForm = ({ creditCardInfo, onChange }) => {
   const handleOnFormFieldChanged = e => {
     const { name, value } = e.target
     onChange(name, value)
+  }
+
+  const creditCardSetter = (field, value) => {
+    if (value === null) {
+      return
+    }
+    return (
+      <div className="text-right">
+        <Button
+          className="btn-selector text-right"
+          color="link"
+          size="sm"
+          onClick={() => onChange(field, value)}>
+          {value}
+        </Button>
+      </div>
+    )
+  }
+
+  const setCreditCard = creditCardNumber => {
+    const type = creditCardType(creditCardNumber)
+    if (type.length) {
+      const id = creditCardIdFromType(type[0].type)
+      onChange('creditCardType', id)
+    }
+
+    onChange('creditCardNumber', creditCardNumber)
+    onChange('creditCardExpYear', defaultYear)
+    onChange('creditCardExpMonth', defaultMonth)
+    onChange('creditCardCvvNumber', defaultCvv)
   }
 
   return (
@@ -70,6 +117,12 @@ const CreditCardForm = ({ creditCardInfo, onChange }) => {
             value={nameOnCard}
             onChange={handleOnFormFieldChanged}
           />
+          {customer
+            ? creditCardSetter(
+                'nameOnCard',
+                `${customer.firstName} ${customer.lastName}`,
+              )
+            : null}
         </Col>
       </FormGroup>
       <FormGroup row>
@@ -81,11 +134,30 @@ const CreditCardForm = ({ creditCardInfo, onChange }) => {
             id="credit-card-number"
             name="creditCardNumber"
             value={creditCardNumber}
-            onChange={hanldeOnCreditCardNumberChanged}
+            onChange={handleOnCreditCardNumberChanged}
             mask="9999 9999 9999 9999"
             maskChar=" "
             tag={InputMask}
           />
+          <Row>
+            <Col offset="6" className="text-right">
+              <Button
+                type="button"
+                color="link"
+                size="sm"
+                onClick={() => setCreditCard(creditCardNumbers.valid)}>
+                <span className="text-success">Valid</span>
+              </Button>{' '}
+              |{' '}
+              <Button
+                type="button"
+                color="link"
+                size="sm"
+                onClick={() => setCreditCard(creditCardNumbers.invalid)}>
+                <span className="text-danger">Invalid</span>
+              </Button>
+            </Col>
+          </Row>
         </Col>
         <Col md="3">
           <Label htmlFor="credit-card-exp-date">Expiration date</Label>
@@ -116,4 +188,4 @@ const CreditCardForm = ({ creditCardInfo, onChange }) => {
   )
 }
 
-export default CreditCardForm
+export default connect(mapStateToProps)(CreditCardForm)

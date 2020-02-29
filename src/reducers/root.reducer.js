@@ -8,8 +8,15 @@ import insuranceDataReducer from './insurance-data/insurance-data.reducer'
 import moveInCostsReducer from './move-in-costs/move-in-costs.reducer'
 import pusherReducer from './pusher/pusher.reducer'
 import rentNowAfterReducer from './rent-now-after/rent-now-after.reducer'
+import shortRentNowReducer from './short-rent-now/short-rent-now.reducer'
 
-const whitelist = ['global', 'insuranceData', 'moveInCosts', 'rentNowAfter']
+const whitelist = [
+  'global',
+  'insuranceData',
+  'moveInCosts',
+  'rentNowAfter',
+  'shortRentNow',
+]
 
 const persistConfig = {
   key: 'root',
@@ -27,6 +34,7 @@ const createRootReducer = history =>
       moveInCosts: moveInCostsReducer,
       pusher: pusherReducer,
       rentNowAfter: rentNowAfterReducer,
+      shortRentNow: shortRentNowReducer,
     }),
   )
 

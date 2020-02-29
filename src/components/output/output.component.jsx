@@ -68,6 +68,16 @@ class Output extends Component {
             />
           </ReactAutoScroll>
         </OutputContainer>
+        <small>
+          <strong>Note:</strong> Object keys will be displayed in camelCase, but
+          the VLS and the CLS will read these as lowercase separated by
+          underscores.
+          <br />
+          <strong>Example:</strong>{' '}
+          <code>
+            {'vendorLead => vendor_lead, locationUrn => location_urn'}
+          </code>
+        </small>
       </Col>
     )
   }
