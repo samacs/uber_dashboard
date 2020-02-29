@@ -44,11 +44,6 @@ const DatesSelector = ({
     ? dateNeeded
     : dateMoveIn
 
-  console.log('dateMoveIn', dateMoveIn)
-  console.log('dateNeeded', dateNeeded)
-  console.log('minDate', minDate)
-  console.log('selectedDate', selectedDate)
-
   return (
     <Fragment>
       <Col md="3">

@@ -36,3 +36,13 @@ export const selectTotal = createSelector(
   [selectMoveInCostsState],
   state => state.total,
 )
+
+export const selectStartDate = createSelector(
+  [selectMoveInCostsState],
+  state => state.startDate,
+)
+
+export const selectEndDate = createSelector(
+  [selectMoveInCostsState],
+  state => state.endDate,
+)

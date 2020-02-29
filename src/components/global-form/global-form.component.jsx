@@ -65,8 +65,11 @@ const GlobalForm = ({
           <h1 className="h2">Global parameters</h1>
           <FormGroup row>
             <Col>
+              {/*
               <Label htmlFor="access-token">Access token</Label>
+            */}
               <Input
+                type="hidden"
                 name="accessToken"
                 onChange={handleOnFormFieldChange}
                 value={accessToken}
