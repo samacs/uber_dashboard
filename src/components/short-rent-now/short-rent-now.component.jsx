@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -12,20 +12,15 @@ import {
   Form,
   Button,
   Row,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Tooltip,
 } from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
-import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons'
+import humps from 'humps'
 
 import {
   selectLocationUrn,
   selectClientUrn,
-  selectAccessToken,
 } from '../../reducers/global/global.selectors'
 import {
   selectForm,
@@ -41,7 +36,6 @@ const mapStateToProps = createStructuredSelector({
   locationUrn: selectLocationUrn,
   clientUrn: selectClientUrn,
   vendorLead: selectVendorLead,
-  accessToken: selectAccessToken,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -59,7 +53,6 @@ const ShortRentNow = ({
   locationUrn,
   clientUrn,
   vendorLead,
-  accessToken,
   actions: {
     shortRentNowFormFieldChanged,
     shortRentNowRequest,
@@ -83,23 +76,33 @@ const ShortRentNow = ({
     clientUid,
   } = form
 
-  const [showAccessToken, setShowAccessToken] = useState(false)
-  const [showTooltip, setShowTooltip] = useState(false)
-
-  const toggleAccessTokenTooltip = () => setShowTooltip(!showTooltip)
-  const toggleAccessTokenIcon = () => setShowAccessToken(!showAccessToken)
-
   const handleOnSubmit = e => {
     e.preventDefault()
 
     const params = {
-      ...form.toJS(),
+      'p-first-name': form.firstName,
+      'p-last-name': form.lastName,
+      'p-tel': form.phone,
+      'u-email': form.email,
+      'p-reservation-date': form.reservationDate,
+      'p-unit-external-id': form.storageUnitExternalId,
+      'p-rental-rate': form.rentalRate,
+      'p-unit-size': form.size,
+      'p-spacial-desc': form.promotion,
+      'p-amenities': form.amenities,
+      'p-special-id': 'what?',
+      ga_client_id: '131441893.1581704404',
+
       locationUrn,
       clientUrn,
       createdAt: moment().format(),
       leadUid: moment().format('X'),
     }
-    shortRentNowRequest(params)
+    const formData = new FormData()
+    for (let field in params) {
+      formData.set(humps.decamelize(field), params[field])
+    }
+    shortRentNowRequest(formData)
   }
 
   const handleOnChange = e => {
@@ -115,44 +118,10 @@ const ShortRentNow = ({
     shortRentNowVendorLeadRequest(vendorLead.id)
   }
 
-  const handleOnGlobalFormFieldChanged = e => {
-    const { name, value } = e.target
-    globalFormFieldChanged(name, value)
-  }
-
   return (
     <TabPane tabId={tabId}>
       <h1 className="h2">ShortReservationToRentNow</h1>
       <Form onSubmit={handleOnSubmit} name="shortReservationToRentNow">
-        <FormGroup row>
-          <Col>
-            <Label htmlFor="access-token">Access token</Label>
-            <InputGroup>
-              <Input
-                type={showAccessToken ? 'text' : 'password'}
-                id="access-token"
-                name="accessToken"
-                value={accessToken}
-                onChange={handleOnGlobalFormFieldChanged}
-              />
-              <InputGroupAddon addonType="append" id="access-token-switch">
-                <InputGroupText
-                  className="addon-switch"
-                  onClick={toggleAccessTokenIcon}>
-                  {showAccessToken ? <EyeSlashFill /> : <EyeFill />}
-                </InputGroupText>
-              </InputGroupAddon>
-            </InputGroup>
-            <Tooltip
-              placement="top"
-              isOpen={showTooltip}
-              autohide={true}
-              target="access-token-switch"
-              toggle={toggleAccessTokenTooltip}>
-              {showAccessToken ? 'Hide Access Token' : 'Show Access Token'}
-            </Tooltip>
-          </Col>
-        </FormGroup>
         <FormGroup row>
           <Col md="6">
             <Label htmlFor="client-uid">Client UID</Label>

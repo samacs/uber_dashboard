@@ -9,6 +9,7 @@ import moveInCostsReducer from './move-in-costs/move-in-costs.reducer'
 import pusherReducer from './pusher/pusher.reducer'
 import rentNowAfterReducer from './rent-now-after/rent-now-after.reducer'
 import shortRentNowReducer from './short-rent-now/short-rent-now.reducer'
+import updateTenantReducer from './update-tenant/update-tenant.reducer'
 
 const whitelist = [
   'global',
@@ -16,6 +17,7 @@ const whitelist = [
   'moveInCosts',
   'rentNowAfter',
   'shortRentNow',
+  'updateTenant',
 ]
 
 const persistConfig = {
@@ -35,6 +37,7 @@ const createRootReducer = history =>
       pusher: pusherReducer,
       rentNowAfter: rentNowAfterReducer,
       shortRentNow: shortRentNowReducer,
+      updateTenant: updateTenantReducer,
     }),
   )
 

@@ -44,6 +44,8 @@ export default (state = initialState, action) => {
         .set('error', action.payload)
         .set('response', null)
     case SHORT_RESERVATION_TO_RENT_NOW_SUCCESS:
+      console.info(action.type)
+      console.info(action.payload)
       return state
         .set('isRequesting', false)
         .set('error', null)

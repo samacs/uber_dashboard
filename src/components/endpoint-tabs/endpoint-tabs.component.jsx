@@ -7,6 +7,7 @@ import InsuranceData from '../insurance-data/insurance-data.component'
 import MoveInCosts from '../move-in-costs/move-in-costs.component'
 import RentNowAfter from '../rent-now-after/rent-now-after.component'
 import ShortRentNow from '../short-rent-now/short-rent-now.component'
+import UpdateTenant from '../update-tenant/update-tenant.component'
 
 const EndpointTabs = ({ activeTab }) => (
   <div
@@ -27,6 +28,7 @@ const EndpointTabs = ({ activeTab }) => (
             <MoveInCosts />
             <RentNowAfter />
             <ShortRentNow />
+            <UpdateTenant />
           </TabContent>
         </Col>
       </Row>

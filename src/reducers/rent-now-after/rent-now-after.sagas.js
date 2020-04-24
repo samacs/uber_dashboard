@@ -23,12 +23,13 @@ export function* submitRentNowAfterReservation({ payload }) {
       leadForm,
       payload,
     )
-    const { pusherAppKey, pusherChannel } = response
+    console.log(response)
+    const { pusher_app_key, pusher_channel } = response
     yield put(rentNowAfterSuccess(response))
     yield put(
       pusherSubscribe(
-        pusherAppKey,
-        pusherChannel,
+        pusher_app_key,
+        pusher_channel,
         'success',
         'rent_now_after_reservation_',
       ),

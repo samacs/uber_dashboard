@@ -13,6 +13,7 @@ import InsuranceDataInitialState from '../reducers/insurance-data/insurance-data
 import MoveInCostsInitialState from '../reducers/move-in-costs/move-in-costs.state'
 import PusherInitialState from '../reducers/pusher/pusher.state'
 import RentNowAfterInitialState from '../reducers/rent-now-after/rent-now-after.state'
+import UpdateTenantInitialState from '../reducers/update-tenant/update-tenant.state'
 
 const createInitialState = () => ({
   global: new GlobalInitialState(),
@@ -20,6 +21,7 @@ const createInitialState = () => ({
   moveInCosts: new MoveInCostsInitialState(),
   pusher: new PusherInitialState(),
   rentNowAfter: new RentNowAfterInitialState(),
+  updateTenant: new UpdateTenantInitialState(),
 })
 
 const isProduction = process.env.NODE_ENV === 'production'
