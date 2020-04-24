@@ -48,6 +48,11 @@ export default class Api {
     if (headers['Content-Type'] === 'multipart/form-data') {
       const { baseURL, url, data } = requestConfig
       const absoluteURL = `${baseURL}${url}`
+      const payload = {}
+      for (let key of data.keys()) {
+        payload[key] = data.get(key)
+      }
+      console.info(payload)
       return axios.post(absoluteURL, data)
     }
     return this.client.request(requestConfig)
