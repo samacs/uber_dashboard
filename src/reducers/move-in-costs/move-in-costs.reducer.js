@@ -6,6 +6,7 @@ import {
   MOVE_IN_COSTS_SUCCESS,
   MOVE_IN_COST_RESERVATION,
   MOVE_IN_COSTS_SET_USE_INSURANCE_PLANS,
+  MOVE_IN_COSTS_SET_USE_ANY_DATE,
 } from './move-in-costs.constants'
 
 const initialState = new InitialState()
@@ -48,6 +49,8 @@ export default (state = initialState, action) => {
         .set('endDate', payload.endDate)
 
         .set('moveInCosts', payload.moveInCosts)
+    case MOVE_IN_COSTS_SET_USE_ANY_DATE:
+      return state.set('useAnyDate', action.payload)
     default:
       return state
   }

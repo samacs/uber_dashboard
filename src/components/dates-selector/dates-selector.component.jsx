@@ -25,6 +25,7 @@ const DatesSelector = ({
   dateMoveIn,
   requireTodayMoveIn,
   actions: { moveInCostsFormFieldChanged },
+  useAnyDate,
 }) => {
   const handleOnDateChanged = (name, date) => {
     moveInCostsFormFieldChanged(name, moment(date).format())
@@ -53,7 +54,7 @@ const DatesSelector = ({
             className="form-control"
             selected={moment(dateNeeded).toDate()}
             onChange={date => handleOnDateChanged('dateNeeded', date)}
-            minDate={new Date()}
+            minDate={useAnyDate ? null : new Date()}
           />
           <MoveInDateSetter dateFieldName="dateNeeded" />
         </FormGroup>
@@ -65,8 +66,8 @@ const DatesSelector = ({
             className="form-control"
             selected={moment(selectedDate).toDate()}
             onChange={date => handleOnDateChanged('dateMoveIn', date)}
-            minDate={moment(minDate).toDate()}
-            maxDate={moment(dateMoveIn)}
+            minDate={useAnyDate ? null : moment(minDate).toDate()}
+            maxDate={useAnyDate ? null : moment(dateMoveIn)}
           />
           <MoveInDateSetter dateFieldName="dateMoveIn" />
         </FormGroup>
@@ -81,6 +82,7 @@ DatesSelector.propTypes = {
   actions: PropTypes.shape({
     moveInCostsFormFieldChanged: PropTypes.func.isRequired,
   }).isRequired,
+  useAnyDate: PropTypes.bool.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DatesSelector)

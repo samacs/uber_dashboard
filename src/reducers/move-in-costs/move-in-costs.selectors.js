@@ -46,3 +46,8 @@ export const selectEndDate = createSelector(
   [selectMoveInCostsState],
   state => state.endDate,
 )
+
+export const selectUseAnyDate = createSelector(
+  [selectMoveInCostsState],
+  state => state.useAnyDate,
+)

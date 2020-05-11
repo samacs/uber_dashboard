@@ -4,6 +4,7 @@ import {
   MOVE_IN_COSTS_FAILURE,
   MOVE_IN_COSTS_SUCCESS,
   MOVE_IN_COSTS_SET_USE_INSURANCE_PLANS,
+  MOVE_IN_COSTS_SET_USE_ANY_DATE,
 } from './move-in-costs.constants'
 
 export const moveInCostsFormFieldChanged = (field, value) => ({
@@ -29,4 +30,9 @@ export const moveInCostsSuccess = response => ({
 export const moveInCostsSetUseInsurancePlans = useOrNot => ({
   type: MOVE_IN_COSTS_SET_USE_INSURANCE_PLANS,
   payload: useOrNot,
+})
+
+export const moveInCostsSetUseAnyDate = useAnyDate => ({
+  type: MOVE_IN_COSTS_SET_USE_ANY_DATE,
+  payload: useAnyDate,
 })

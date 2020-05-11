@@ -4,9 +4,7 @@ import moment from 'moment'
 const Form = Record({
   unitId: '',
   dateNeeded: moment().format(),
-  dateMoveIn: moment()
-    .add(2, 'days')
-    .format(),
+  dateMoveIn: moment().add(2, 'days').format(),
   insuranceCoverageId: '',
   concessionId: '',
   insuranceLabel: '',
@@ -22,6 +20,7 @@ const InitialState = Record({
   endDate: '',
   moveInCosts: [],
   form: new Form(),
+  useAnyDate: false,
 })
 
 export default InitialState

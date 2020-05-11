@@ -17,6 +17,7 @@ import {
   selectForm,
   selectIsRequesting,
   selectError,
+  selectUseAnyDate,
 } from '../../reducers/move-in-costs/move-in-costs.selectors'
 import { selectRequireTodayMoveIn } from '../../reducers/insurance-data/insurance-data.selectors'
 import { selectInsurancePlans } from '../../reducers/insurance-data/insurance-data.selectors'
@@ -39,6 +40,7 @@ const mapStateToProps = createStructuredSelector({
   insurancePlans: selectInsurancePlans,
   billing_28Days: selectBilling_28Days,
   requireTodayMoveIn: selectRequireTodayMoveIn,
+  useAnyDate: selectUseAnyDate,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -66,7 +68,9 @@ const MoveInCosts = ({
     globalFormFieldChanged,
     moveInCostsFormFieldChanged,
     moveInCostsRequest,
+    moveInCostsSetUseAnyDate,
   },
+  useAnyDate,
 }) => {
   const {
     unitId,
@@ -90,6 +94,10 @@ const MoveInCosts = ({
   const handleOnBilling_28DaysChanged = e => {
     const { name, checked } = e.target
     globalFormFieldChanged(name, checked)
+  }
+
+  const handleUseAnyDateChanged = e => {
+    moveInCostsSetUseAnyDate(e.target.checked)
   }
 
   const handleOnSubmit = e => {
@@ -143,10 +151,23 @@ const MoveInCosts = ({
             <ConcessionSetter setter={moveInCostsFormFieldChanged} />
           </Col>
         </FormGroup>
+        <FormGroup check>
+          <Label check htmlFor="use-any-date">
+            <Input
+              name="useAnyDate"
+              id="use-any-date"
+              type="checkbox"
+              checked={useAnyDate}
+              onChange={handleUseAnyDateChanged}
+            />{' '}
+            Use any date?
+          </Label>
+        </FormGroup>
         <FormGroup row>
           <DatesSelector
             dateNeeded={dateNeeded}
             dateMoveIn={dateMoveIn}
+            useAnyDate={useAnyDate}
             requireTodayMoveIn={requireTodayMoveIn}
           />
           <Col md="6">
