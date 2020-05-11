@@ -74,3 +74,18 @@ export const selectCustomer = createSelector([selectForm], form => {
   const { firstName, lastName, email, phone } = form
   return { firstName, lastName, email, phone }
 })
+
+export const selectNextStepCta = createSelector(
+  [selectRentNowAfter],
+  state => state.response.nextStepCta,
+)
+
+export const selectLeadUid = createSelector(
+  [selectNextStepCta],
+  nextStepCta => nextStepCta.leadUid,
+)
+
+export const selectLedgerId = createSelector(
+  [selectNextStepCta],
+  nextStepCta => nextStepCta.ledgerId,
+)

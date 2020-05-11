@@ -46,3 +46,8 @@ export const selectRequireTodayMoveIn = createSelector(
   [selectForm],
   form => form.requireTodayMoveIn,
 )
+
+export const selectTenantId = createSelector(
+  [selectCustomer],
+  customer => customer.tenantId,
+)

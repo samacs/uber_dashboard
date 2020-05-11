@@ -8,4 +8,12 @@ export default class LeadsService extends Api {
       {},
       { 'Content-Type': 'multipart/form-data' },
     )
+
+  updateTenant = (locationUrn, leadForm, lead) =>
+    this.put(
+      `/locations/${locationUrn}/html_forms/${leadForm}/submissions`,
+      lead,
+      {},
+      { 'Content-Type': 'multipart/form-data' },
+    )
 }
